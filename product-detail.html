@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المنتج - SelfHealing</title>
+    <meta name="description" content="تفاصيل المنتج في متجر SelfHealing">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .product-detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .product-images {
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+        
+        .main-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .main-image:hover {
+            transform: scale(1.02);
+        }
+        
+        .thumbnail-images {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .thumbnail:hover,
+        .thumbnail.active {
+            border-color: var(--primary-green);
+            transform: scale(1.1);
+        }
+        
+        .product-info {
+            padding: 20px 0;
+        }
+        
+        .product-title {
+            font-size: 2.2rem;
+            color: var(--dark-green);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .product-price {
+            font-size: 2rem;
+            color: var(--primary-green);
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+        
+        .stars {
+            font-size: 1.3rem;
+        }
+        
+        .product-category {
+            display: inline-block;
+            background-color: var(--light-green);
+            color: var(--dark-green);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+        
+        .product-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-color);
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--off-white);
+            border-radius: 10px;
+            border-right: 4px solid var(--primary-green);
+        }
+        
+        .product-details {
+            margin-bottom: 30px;
+        }
+        
+        .detail-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .detail-section h3 {
+            color: var(--dark-green);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .benefits-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            padding-right: 25px;
+        }
+        
+        .benefits-list li:before {
+            content: "✓";
+            position: absolute;
+            right: 0;
+            color: var(--primary-green);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .benefits-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .quantity-btn {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .quantity-btn:hover {
+            background-color: var(--dark-green);
+        }
+        
+        .quantity-input {
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 1.1rem;
+            width: 60px;
+            background-color: var(--white);
+        }
+        
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--primary-green);
+            background-color: transparent;
+            color: var(--primary-green);
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            background-color: var(--primary-green);
+            color: var(--white);
+        }
+        
+        .related-products {
+            margin-top: 60px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 30px;
+            color: var(--text-light);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary-green);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .product-detail-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .product-images {
+                position: static;
+            }
+            
+            .main-image {
+                height: 300px;
+            }
+            
+            .product-title {
+                font-size: 1.8rem;
+            }
+            
+            .product-price {
+                font-size: 1.6rem;
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+</head>
+<body>
+    <!-- الهيدر -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    SelfHealing
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="products.html">المنتجات</a></li>
+                        <li>
+                            <a href="cart.html">
+                                السلة
+                                <span class="cart-count" id="cartCount">0</span>
+                            </a>
+                        </li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main>
+        <div class="container">
+            <!-- مسار التنقل -->
+            <div class="breadcrumb">
+                <a href="index.html">الرئيسية</a> / 
+                <a href="products.html">المنتجات</a> / 
+                <span id="productBreadcrumb">تفاصيل المنتج</span>
+            </div>
+            
+            <!-- محتوى تفاصيل المنتج -->
+            <div id="productDetailContent">
+                <!-- سيتم ملؤه بواسطة JavaScript -->
+            </div>
+            
+            <!-- المنتجات ذات الصلة -->
+            <section class="related-products">
+                <h2 style="text-align: center; color: var(--dark-green); margin-bottom: 30px;">منتجات قد تعجبك</h2>
+                <div class="products-grid" id="relatedProducts">
+                    <!-- سيتم ملؤها بواسطة JavaScript -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>متجر SelfHealing</h3>
+                    <p>متجرك المتخصص في المنتجات الطبيعية والصحية عالية الجودة.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="products.html">المنتجات</a></li>
+                        <li><a href="cart.html">السلة</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>تواصل معنا</h3>
+                    <p>📱 واتساب: 07513958118</p>
+                    <p>📱 واتساب: 07756745524</p>
+                    <p>📧 البريد الإلكتروني: selfhealing.store1@gmail.com</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>معلومات مهمة</h3>
+                    <p>🚚 توصيل سريع لجميع أنحاء العراق</p>
+                    <p>💰 الدفع عند الاستلام</p>
+                    <p>🔒 منتجات أصلية ومضمونة</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);">
+                <p>&copy; 2024 متجر SelfHealing. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- زر العودة للأعلى -->
+    <button class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
+        ↑
+    </button>
+
+    <!-- JavaScript -->
+    <script src="js/products-data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        // متغيرات عامة
+        let currentProduct = null;
+        let currentQuantity = 1;
+        
+        // دالة للحصول على معرف المنتج من URL
+        function getProductIdFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return parseInt(urlParams.get('id'));
+        }
+        
+        // دالة تغيير الصورة الرئيسية
+        function changeMainImage(imageSrc, thumbnailElement) {
+            const mainImage = document.getElementById('mainImage');
+            mainImage.src = imageSrc;
+            
+            // إزالة الفئة النشطة من جميع الصور المصغرة
+            document.querySelectorAll('.thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            
+            // إضافة الفئة النشطة للصورة المصغرة المحددة
+            thumbnailElement.classList.add('active');
+        }
+        
+        // دالة تغيير الكمية
+        function changeQuantity(change) {
+            const quantityInput = document.getElementById('quantityInput');
+            let newQuantity = parseInt(quantityInput.value) + change;
+            
+            if (newQuantity < 1) newQuantity = 1;
+            if (newQuantity > 99) newQuantity = 99;
+            
+            quantityInput.value = newQuantity;
+            currentQuantity = newQuantity;
+        }
+        
+        // دالة إضافة المنتج للسلة مع الكمية المحددة
+        function addProductToCart() {
+            if (currentProduct) {
+                for (let i = 0; i < currentQuantity; i++) {
+                    addToCart(currentProduct.id);
+                }
+                
+                // إظهار رسالة تأكيد
+                alert(`تم إضافة ${currentQuantity} من ${currentProduct.name} إلى السلة!`);
+            }
+        }
+        
+        // دالة عرض تفاصيل المنتج
+        function displayProductDetail(product) {
+            if (!product) {
+                document.getElementById('productDetailContent').innerHTML = `
+                    <div style="text-align: center; padding: 60px 20px;">
+                        <h2 style="color: var(--text-light);">المنتج غير موجود</h2>
+                        <p style="color: var(--text-light); margin-bottom: 30px;">عذراً، لم نتمكن من العثور على المنتج المطلوب.</p>
+                        <a href="products.html" class="btn">العودة إلى المنتجات</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            currentProduct = product;
+            
+            // تحديث عنوان الصفحة ومسار التنقل
+            document.title = `${product.name} - SelfHealing`;
+            document.getElementById('productBreadcrumb').textContent = product.name;
+            
+            const stars = '⭐'.repeat(product.rating);
+            
+            // إنشاء الصور المصغرة
+            let thumbnailsHTML = '';
+            product.images.forEach((image, index) => {
+                thumbnailsHTML += `
+                    <img src="${image}" 
+                         alt="${product.name} - صورة ${index + 1}" 
+                         class="thumbnail ${index === 0 ? 'active' : ''}"
+                         onclick="changeMainImage('${image}', this)"
+                         onerror="this.style.display='none';">
+                `;
+            });
+            
+            // إنشاء قائمة الفوائد
+            let benefitsHTML = '';
+            product.benefits.forEach(benefit => {
+                benefitsHTML += `<li>${benefit}</li>`;
+            });
+            
+            const productHTML = `
+                <div class="product-detail-container">
+                    <!-- قسم الصور -->
+                    <div class="product-images">
+                        <img id="mainImage" 
+                             src="${product.image}" 
+                             alt="${product.name}" 
+                             class="main-image"
+                             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'font-size: 6rem; color: var(--primary-green); text-align: center; padding: 100px 0;\\'>🌿</div>';">
+                        
+                        <div class="thumbnail-images">
+                            ${thumbnailsHTML}
+                        </div>
+                    </div>
+                    
+                    <!-- قسم المعلومات -->
+                    <div class="product-info">
+                        <h1 class="product-title">${product.name}</h1>
+                        
+                        <div class="product-price">${product.price.toLocaleString()} د.ع</div>
+                        
+                        <div class="product-rating">
+                            <span class="stars">${stars}</span>
+                            <span>(${product.rating}/5)</span>
+                        </div>
+                        
+                        <div class="product-category">
+                            📂 ${product.category}
+                        </div>
+                        
+                        <div class="product-description">
+                            ${product.description}
+                        </div>
+                        
+                        <!-- اختيار الكمية -->
+                        <div class="quantity-selector">
+                            <label for="quantityInput" style="font-weight: 600; color: var(--dark-green);">الكمية:</label>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                                <input type="number" id="quantityInput" class="quantity-input" value="1" min="1" max="99" onchange="currentQuantity = parseInt(this.value)">
+                                <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                            </div>
+                        </div>
+                        
+                        <!-- زر إضافة للسلة -->
+                        <button class="btn add-to-cart-btn" onclick="addProductToCart()">
+                            🛒 إضافة للسلة
+                        </button>
+                        
+                        <!-- أزرار الإجراءات -->
+                        <div class="product-actions">
+                            <button class="action-btn" onclick="window.open('https://api.whatsapp.com/send/?phone=07513958118&text=مرحباً، أريد الاستفسار عن منتج ${encodeURIComponent(product.name)}&type=phone_number&app_absent=0', '_blank')">
+                                📱 استفسار عبر واتساب
+                            </button>
+                            <button class="action-btn" onclick="shareProduct()">
+                                📤 مشاركة المنتج
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- التفاصيل المفصلة -->
+                <div class="product-details">
+                    <div class="detail-section">
+                        <h3>📋 التفاصيل</h3>
+                        <p style="line-height: 1.8; color: var(--text-color);">${product.details}</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h3>✨ الفوائد</h3>
+                        <ul class="benefits-list">
+                            ${benefitsHTML}
+                        </ul>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h3>📖 طريقة الاستخدام</h3>
+                        <p style="line-height: 1.8; color: var(--text-color);">${product.usage}</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h3>🧪 المكونات</h3>
+                        <p style="line-height: 1.8; color: var(--text-color);">${product.ingredients}</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('productDetailContent').innerHTML = productHTML;
+        }
+        
+        // دالة مشاركة المنتج
+        function shareProduct() {
+            if (navigator.share && currentProduct) {
+                navigator.share({
+                    title: currentProduct.name,
+                    text: currentProduct.description,
+                    url: window.location.href
+                });
+            } else if (currentProduct) {
+                // نسخ الرابط إلى الحافظة
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('تم نسخ رابط المنتج إلى الحافظة!');
+                });
+            }
+        }
+        
+        // دالة عرض المنتجات ذات الصلة
+        function displayRelatedProducts(currentProductId, category) {
+            const relatedProductsGrid = document.getElementById('relatedProducts');
+            if (!relatedProductsGrid) return;
+            
+            // الحصول على منتجات من نفس الفئة (باستثناء المنتج الحالي)
+            let relatedProducts = products.filter(product => 
+                product.category === category && product.id !== currentProductId
+            );
+            
+            // إذا لم توجد منتجات كافية من نفس الفئة، أضف منتجات عشوائية
+            if (relatedProducts.length < 4) {
+                const otherProducts = products.filter(product => 
+                    product.id !== currentProductId && !relatedProducts.includes(product)
+                );
+                relatedProducts = relatedProducts.concat(otherProducts.slice(0, 4 - relatedProducts.length));
+            }
+            
+            // عرض أول 4 منتجات فقط
+            relatedProducts = relatedProducts.slice(0, 4);
+            
+            relatedProducts.forEach(product => {
+                const stars = '⭐'.repeat(product.rating);
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card fade-in';
+                productCard.innerHTML = `
+                    <a href="product-detail.html?id=${product.id}" class="product-link">
+                        <div class="product-image">
+                            <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'font-size: 3rem; color: var(--primary-green);\\'>🌿</div>';">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.name}</h3>
+                            <div class="product-price">${product.price.toLocaleString()} د.ع</div>
+                            <p class="product-description">${product.description}</p>
+                            <div class="product-rating">
+                                <span>(${product.rating}/5)</span>
+                                <span class="stars">${stars}</span>
+                            </div>
+                            <div style="margin-bottom: 1rem; padding: 8px; background-color: var(--light-green); border-radius: 5px; font-size: 0.85rem; color: var(--dark-green);">
+                                <strong>الفئة:</strong> ${product.category}
+                            </div>
+                        </div>
+                    </a>
+                    <button class="btn" onclick="addToCart(${product.id})">إضافة للسلة</button>
+                `;
+                relatedProductsGrid.appendChild(productCard);
+            });
+        }
+        
+        // عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            const productId = getProductIdFromURL();
+            
+            if (productId && typeof products !== 'undefined') {
+                const product = getProductById(productId);
+                displayProductDetail(product);
+                
+                if (product) {
+                    displayRelatedProducts(product.id, product.category);
+                }
+            } else {
+                displayProductDetail(null);
+            }
+        });
+    </script>
+</body>
+</html>
+

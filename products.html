@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنتجات - SelfHealing</title>
+    <meta name="description" content="تسوق من مجموعة واسعة من المنتجات الطبيعية والصحية في متجر SelfHealing">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .category-btn {
+            margin: 5px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            background-color: var(--text-light);
+            color: var(--white);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+        
+        .search-bar {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            background-color: var(--off-white);
+            transition: border-color var(--transition-speed) ease;
+        }
+        
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+        
+        .filters-header {
+            background-color: var(--primary-green);
+            color: var(--white);
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+            margin: -20px -20px 20px -20px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .products-count {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        .sort-options {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sort-select {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background-color: var(--white);
+            font-family: 'Cairo', sans-serif;
+        }
+    </style>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+</head>
+<body>
+    <!-- الهيدر -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    SelfHealing
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="products.html" class="active">المنتجات</a></li>
+                        <li>
+                            <a href="cart.html">
+                                السلة
+                                <span class="cart-count" id="cartCount">0</span>
+                            </a>
+                        </li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main>
+        <div class="container">
+            <h1>منتجاتنا الطبيعية والصحية</h1>
+            
+            <!-- شريط البحث -->
+            <div style="margin-bottom: 30px;">
+                <input type="text" id="productSearch" class="search-bar" placeholder="ابحث عن المنتجات..." onkeyup="filterProducts()">
+            </div>
+            
+            <!-- أزرار الفئات -->
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h3 style="margin-bottom: 15px; color: var(--dark-green);">تصفح حسب الفئة</h3>
+                <div id="categoryButtons">
+                    <!-- سيتم ملؤها بواسطة JavaScript -->
+                </div>
+            </div>
+            
+            <!-- محتوى الصفحة -->
+            <div class="products-page-content">
+                <!-- الفلاتر الجانبية -->
+                <aside class="filters-sidebar">
+                    <div class="filters-header">
+                        <h3>🔍 فلترة المنتجات</h3>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="priceRange">نطاق السعر:</label>
+                        <input type="range" id="priceRange" min="0" max="500000" value="500000" oninput="filterByPriceRange()">
+                        <div class="price-display" id="priceDisplay">0 - 500,000 د.ع</div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="ratingFilter">التقييم الأدنى:</label>
+                        <select id="ratingFilter" onchange="filterByRatingFilter()">
+                            <option value="1">⭐ نجمة واحدة فأكثر</option>
+                            <option value="2">⭐⭐ نجمتان فأكثر</option>
+                            <option value="3">⭐⭐⭐ ثلاث نجوم فأكثر</option>
+                            <option value="4">⭐⭐⭐⭐ أربع نجوم فأكثر</option>
+                            <option value="5">⭐⭐⭐⭐⭐ خمس نجوم فقط</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <button class="btn" onclick="resetFilters()" style="width: 100%; background-color: var(--text-light);">
+                            إعادة تعيين الفلاتر
+                        </button>
+                    </div>
+                </aside>
+                
+                <!-- منطقة المنتجات الرئيسية -->
+                <div class="main-products-area">
+                    <!-- رأس المنتجات -->
+                    <div class="products-header">
+                        <div class="products-count" id="productsCount">
+                            عرض جميع المنتجات
+                        </div>
+                        
+                        <div class="sort-options">
+                            <label for="sortSelect">ترتيب حسب:</label>
+                            <select id="sortSelect" class="sort-select" onchange="sortProducts()">
+                                <option value="default">الافتراضي</option>
+                                <option value="name-asc">الاسم (أ-ي)</option>
+                                <option value="name-desc">الاسم (ي-أ)</option>
+                                <option value="price-asc">السعر (من الأقل)</option>
+                                <option value="price-desc">السعر (من الأعلى)</option>
+                                <option value="rating-desc">التقييم (الأعلى أولاً)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- شبكة المنتجات -->
+                    <div class="products-grid" id="productsGrid">
+                        <!-- سيتم ملؤها بواسطة JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>متجر SelfHealing</h3>
+                    <p>متجرك المتخصص في المنتجات الطبيعية والصحية عالية الجودة.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="products.html">المنتجات</a></li>
+                        <li><a href="cart.html">السلة</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>تواصل معنا</h3>
+                    <p>📱 واتساب: 07513958118</p>
+                    <p>📱 واتساب: 07756745524</p>
+                    <p>📧 البريد الإلكتروني: selfhealing.store1@gmail.com</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>معلومات مهمة</h3>
+                    <p>🚚 توصيل سريع لجميع أنحاء العراق</p>
+                    <p>💰 الدفع عند الاستلام</p>
+                    <p>🔒 منتجات أصلية ومضمونة</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);">
+                <p>&copy; 2024 متجر SelfHealing. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- زر العودة للأعلى -->
+    <button class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
+        ↑
+    </button>
+
+    <!-- JavaScript -->
+    <script src="js/products-data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        // متغيرات إضافية للترتيب
+        let currentSortOption = 'default';
+        let filteredProductsCache = [];
+        
+        // دالة إعادة تعيين الفلاتر
+        function resetFilters() {
+            currentCategory = 'الكل';
+            currentSearchTerm = '';
+            currentMinPrice = 0;
+            currentMaxPrice = Math.max(...products.map(p => p.price));
+            currentMinRating = 1;
+            currentSortOption = 'default';
+            
+            // إعادة تعيين واجهة المستخدم
+            document.getElementById('productSearch').value = '';
+            document.getElementById('priceRange').value = currentMaxPrice;
+            document.getElementById('priceDisplay').textContent = `0 - ${currentMaxPrice.toLocaleString()} د.ع`;
+            document.getElementById('ratingFilter').value = '1';
+            document.getElementById('sortSelect').value = 'default';
+            
+            // إعادة تعيين أزرار الفئات
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            categoryButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === 'الكل') {
+                    btn.classList.add('active');
+                }
+            });
+            
+            applyAllFilters();
+        }
+        
+        // دالة الترتيب
+        function sortProducts() {
+            const sortSelect = document.getElementById('sortSelect');
+            currentSortOption = sortSelect.value;
+            
+            let sortedProducts = [...filteredProductsCache];
+            
+            switch (currentSortOption) {
+                case 'name-asc':
+                    sortedProducts.sort((a, b) => a.name.localeCompare(b.name, 'ar'));
+                    break;
+                case 'name-desc':
+                    sortedProducts.sort((a, b) => b.name.localeCompare(a.name, 'ar'));
+                    break;
+                case 'price-asc':
+                    sortedProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    sortedProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating-desc':
+                    sortedProducts.sort((a, b) => b.rating - a.rating);
+                    break;
+                default:
+                    // الترتيب الافتراضي حسب ID
+                    sortedProducts.sort((a, b) => a.id - b.id);
+                    break;
+            }
+            
+            displayProducts(sortedProducts);
+        }
+        
+        // تحديث دالة applyAllFilters لحفظ النتائج وتحديث العداد
+        function applyAllFilters() {
+            let filteredProducts = products;
+
+            // فلترة حسب الفئة
+            if (currentCategory !== 'الكل') {
+                filteredProducts = filteredProducts.filter(product => product.category === currentCategory);
+            }
+
+            // فلترة حسب البحث
+            if (currentSearchTerm) {
+                filteredProducts = filteredProducts.filter(product => 
+                    product.name.toLowerCase().includes(currentSearchTerm) ||
+                    product.description.toLowerCase().includes(currentSearchTerm) ||
+                    product.details.toLowerCase().includes(currentSearchTerm) ||
+                    product.category.toLowerCase().includes(currentSearchTerm)
+                );
+            }
+
+            // فلترة حسب السعر
+            filteredProducts = filteredProducts.filter(product => 
+                product.price >= currentMinPrice && product.price <= currentMaxPrice
+            );
+
+            // فلترة حسب التقييم
+            filteredProducts = filteredProducts.filter(product => product.rating >= currentMinRating);
+
+            // حفظ النتائج المفلترة
+            filteredProductsCache = filteredProducts;
+            
+            // تحديث عداد المنتجات
+            const productsCount = document.getElementById('productsCount');
+            if (productsCount) {
+                productsCount.textContent = `عرض ${filteredProducts.length} من أصل ${products.length} منتج`;
+            }
+            
+            // تطبيق الترتيب
+            sortProducts();
+        }
+        
+        // تحديث دالة displayProducts لتحديث العداد
+        const originalDisplayProducts = displayProducts;
+        displayProducts = function(productsToShow = products) {
+            const productsGrid = document.getElementById('productsGrid');
+            if (!productsGrid) return;
+
+            productsGrid.innerHTML = ''; // مسح المنتجات الحالية
+
+            if (productsToShow.length === 0) {
+                productsGrid.innerHTML = '<p style="text-align: center; color: var(--text-light); font-size: 1.2rem; margin-top: 50px;">لا توجد منتجات مطابقة لمعايير البحث أو الفلترة.</p>';
+                return;
+            }
+
+            productsToShow.forEach(product => {
+                const stars = '⭐'.repeat(product.rating);
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card fade-in';
+                productCard.innerHTML = `
+                    <a href="product-detail.html?id=${product.id}" class="product-link">
+                        <div class="product-image">
+                            <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'font-size: 3rem; color: var(--primary-green);\'>🌿</div>';">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.name}</h3>
+                            <div class="product-price">${product.price.toLocaleString()} د.ع</div>
+                            <p class="product-description">${product.description}</p>
+                            <div class="product-rating">
+                                <span>(${product.rating}/5)</span>
+                                <span class="stars">${stars}</span>
+                            </div>
+                            <div style="margin-bottom: 1rem; padding: 8px; background-color: var(--light-green); border-radius: 5px; font-size: 0.85rem; color: var(--dark-green);">
+                                <strong>الفئة:</strong> ${product.category}
+                            </div>
+                        </div>
+                    </a>
+                    <button class="btn" onclick="addToCart(${product.id})">إضافة للسلة</button>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+
+            // تحديث عداد المنتجات إذا لم يتم تحديثه من قبل
+            const productsCount = document.getElementById('productsCount');
+            if (productsCount && !productsCount.textContent.includes('من أصل')) {
+                productsCount.textContent = `عرض ${productsToShow.length} منتج`;
+            }
+        };
+
+        // عند تحميل الصفحة، قم بعرض المنتجات وتوليد أزرار الفئات
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof products !== 'undefined') {
+                // توليد أزرار الفئات
+                const categoryButtonsContainer = document.getElementById('categoryButtons');
+                if (categoryButtonsContainer) {
+                    const allButton = document.createElement('button');
+                    allButton.className = 'category-btn active';
+                    allButton.textContent = 'الكل';
+                    allButton.onclick = () => filterByCategory('الكل');
+                    categoryButtonsContainer.appendChild(allButton);
+
+                    categories.forEach(category => {
+                        const button = document.createElement('button');
+                        button.className = 'category-btn';
+                        button.textContent = category;
+                        button.onclick = () => filterByCategory(category);
+                        categoryButtonsContainer.appendChild(button);
+                    });
+                }
+
+                // تهيئة نطاق السعر
+                const priceRangeInput = document.getElementById('priceRange');
+                const priceDisplay = document.getElementById('priceDisplay');
+                const maxPrice = Math.max(...products.map(p => p.price));
+                priceRangeInput.max = maxPrice;
+                priceRangeInput.value = maxPrice;
+                priceDisplay.textContent = `0 - ${maxPrice.toLocaleString()} د.ع`;
+
+                // عرض المنتجات عند تحميل الصفحة
+                applyAllFilters();
+            }
+        });
+    </script>
+</body>
+</html>
+

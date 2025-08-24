@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سلة التسوق - SelfHealing</title>
+    <meta name="description" content="سلة التسوق الخاصة بك في متجر SelfHealing">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+</head>
+<body>
+    <!-- الهيدر -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    SelfHealing
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="products.html">المنتجات</a></li>
+                        <li>
+                            <a href="cart.html" class="active">
+                                السلة
+                                <span class="cart-count" id="cartCount">0</span>
+                            </a>
+                        </li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main>
+        <div class="container">
+            <h1>🛒 سلة التسوق</h1>
+            
+            <!-- معلومات السلة -->
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                    <h2 style="margin: 0; color: var(--dark-green);">منتجاتك المختارة</h2>
+                    <div style="color: var(--text-light);">
+                        عدد المنتجات: <span id="cart-items-count" style="font-weight: bold; color: var(--primary-green);">0</span>
+                    </div>
+                </div>
+                
+                <!-- السلة الفارغة -->
+                <div id="empty-cart" style="text-align: center; padding: 60px 20px; display: none;">
+                    <div style="font-size: 4rem; margin-bottom: 20px; color: var(--text-light);">🛒</div>
+                    <h3 style="color: var(--text-light); margin-bottom: 15px;">سلة التسوق فارغة</h3>
+                    <p style="color: var(--text-light); margin-bottom: 30px;">لم تقم بإضافة أي منتجات إلى سلة التسوق بعد</p>
+                    <a href="products.html" class="btn">تسوق الآن</a>
+                </div>
+                
+                <!-- عناصر السلة -->
+                <div id="cart-items" class="cart-items-container">
+                    <!-- سيتم ملؤها بواسطة JavaScript -->
+                </div>
+            </div>
+            
+            <!-- إجمالي السلة وإكمال الطلب -->
+            <div id="cart-total-section" class="card" style="display: none;">
+                <div class="cart-total">
+                    <div class="total-amount">
+                        الإجمالي الكلي: <span id="total-amount">0</span> د.ع
+                    </div>
+                    
+                    <div style="background-color: var(--light-green); padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+                        <h4 style="color: var(--dark-green); margin-bottom: 15px; text-align: center;">📋 معلومات الطلب</h4>
+                        <ul style="color: var(--text-color); line-height: 1.8;">
+                            <li>✅ جميع المنتجات طبيعية وأصلية 100%</li>
+                            <li>🚚 التوصيل متاح لجميع أنحاء العراق</li>
+                            <li>💰 الدفع عند الاستلام (كاش)</li>
+                            <li>📞 سيتم التواصل معك لتأكيد الطلب وتفاصيل التوصيل</li>
+                            <li>⏰ مدة التوصيل: 2-5 أيام عمل حسب المنطقة</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn" onclick="completeOrder()" style="font-size: 1.1rem; padding: 15px 30px; width: 100%; margin-bottom: 15px;">
+                        📱 إكمال الطلب عبر واتساب
+                    </button>
+                    
+                    <div style="text-align: center; color: var(--text-light); font-size: 0.9rem;">
+                        <p>سيتم توجيهك إلى واتساب لإكمال الطلب</p>
+                        <p>رقم الواتساب: <strong style="color: var(--primary-green);">07513958118</strong></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- نصائح للتسوق -->
+            <div class="card">
+                <h3 style="color: var(--dark-green); text-align: center; margin-bottom: 20px;">💡 نصائح للتسوق الآمن</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div style="text-align: center; padding: 15px;">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">🔒</div>
+                        <h4 style="color: var(--dark-green); margin-bottom: 8px;">أمان المعاملات</h4>
+                        <p style="color: var(--text-light); font-size: 0.9rem;">جميع معاملاتنا آمنة ومضمونة</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 15px;">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">📞</div>
+                        <h4 style="color: var(--dark-green); margin-bottom: 8px;">دعم مستمر</h4>
+                        <p style="color: var(--text-light); font-size: 0.9rem;">فريق الدعم متاح على مدار الساعة</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 15px;">
+                        <div style="font-size: 2.5rem; margin-bottom: 10px;">🎁</div>
+                        <h4 style="color: var(--dark-green); margin-bottom: 8px;">عروض خاصة</h4>
+                        <p style="color: var(--text-light); font-size: 0.9rem;">عروض وخصومات حصرية للعملاء</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- منتجات مقترحة -->
+            <div class="card">
+                <h3 style="color: var(--dark-green); text-align: center; margin-bottom: 25px;">🌟 منتجات قد تعجبك</h3>
+                <div class="products-grid" id="suggestedProducts">
+                    <!-- سيتم ملؤها بواسطة JavaScript -->
+                </div>
+                <div style="text-align: center; margin-top: 25px;">
+                    <a href="products.html" class="btn">عرض المزيد من المنتجات</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>متجر SelfHealing</h3>
+                    <p>متجرك المتخصص في المنتجات الطبيعية والصحية عالية الجودة.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="products.html">المنتجات</a></li>
+                        <li><a href="cart.html">السلة</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>تواصل معنا</h3>
+                    <p>📱 واتساب: 07513958118</p>
+                    <p>📱 واتساب: 07756745524</p>
+                    <p>📧 البريد الإلكتروني: selfhealing.store1@gmail.com</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>معلومات مهمة</h3>
+                    <p>🚚 توصيل سريع لجميع أنحاء العراق</p>
+                    <p>💰 الدفع عند الاستلام</p>
+                    <p>🔒 منتجات أصلية ومضمونة</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);">
+                <p>&copy; 2024 متجر SelfHealing. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- زر العودة للأعلى -->
+    <button class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
+        ↑
+    </button>
+
+    <!-- JavaScript -->
+    <script src="js/products-data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        // عرض منتجات مقترحة في صفحة السلة
+        document.addEventListener('DOMContentLoaded', function() {
+            const suggestedProductsGrid = document.getElementById('suggestedProducts');
+            if (suggestedProductsGrid && typeof products !== 'undefined') {
+                // اختيار 4 منتجات عشوائية كمنتجات مقترحة
+                const shuffledProducts = [...products].sort(() => 0.5 - Math.random());
+                const suggestedProducts = shuffledProducts.slice(0, 4);
+                
+                suggestedProducts.forEach(product => {
+                    const stars = '⭐'.repeat(product.rating);
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card fade-in';
+                    productCard.innerHTML = `
+                        <div class="product-image">
+                            <img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'font-size: 3rem; color: var(--primary-green);\\'>🌿</div>';">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.name}</h3>
+                            <div class="product-price">${product.price.toLocaleString()} د.ع</div>
+                            <p class="product-description">${product.description}</p>
+                            <div class="product-rating">
+                                <span>(${product.rating}/5)</span>
+                                <span class="stars">${stars}</span>
+                            </div>
+                            <div style="margin-bottom: 1rem; padding: 8px; background-color: var(--light-green); border-radius: 5px; font-size: 0.85rem; color: var(--dark-green);">
+                                <strong>الفئة:</strong> ${product.category}
+                            </div>
+                            <button class="btn" onclick="addToCart(${product.id})">إضافة للسلة</button>
+                        </div>
+                    `;
+                    suggestedProductsGrid.appendChild(productCard);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+

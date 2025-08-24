@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل معنا - SelfHealing</title>
+    <meta name="description" content="تواصل مع فريق متجر SelfHealing للاستفسارات والدعم الفني">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+</head>
+<body>
+    <!-- الهيدر -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    SelfHealing
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="products.html">المنتجات</a></li>
+                        <li>
+                            <a href="cart.html">
+                                السلة
+                                <span class="cart-count" id="cartCount">0</span>
+                            </a>
+                        </li>
+                        <li><a href="contact.html" class="active">تواصل معنا</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main>
+        <div class="container">
+            <h1>📞 تواصل معنا</h1>
+            
+            <!-- مقدمة -->
+            <div class="card">
+                <h2 style="text-align: center; color: var(--dark-green); margin-bottom: 20px;">نحن هنا لخدمتكم</h2>
+                <p style="text-align: center; color: var(--text-light); font-size: 1.1rem; line-height: 1.8;">
+                    فريق متجر SelfHealing مستعد للإجابة على جميع استفساراتكم وتقديم أفضل الخدمات. 
+                    تواصلوا معنا عبر الطرق المتاحة أدناه وسنكون سعداء بمساعدتكم.
+                </p>
+            </div>
+            
+            <!-- طرق التواصل -->
+            <section class="contact-info">
+                <div class="contact-card fade-in">
+                    <div class="contact-icon">📱</div>
+                    <h3>واتساب الرئيسي</h3>
+                    <p>للطلبات والاستفسارات العامة</p>
+                    <div style="margin-top: 15px;">
+                        <strong style="color: var(--primary-green); font-size: 1.2rem;">07513958118</strong>
+                    </div>
+                    <a href="https://api.whatsapp.com/send/?phone=07513958118&text=مرحباً، أريد الاستفسار عن منتجات SelfHealing&type=phone_number&app_absent=0" 
+                       target="_blank" class="btn" style="margin-top: 15px; display: inline-block;">
+                        تواصل عبر واتساب
+                    </a>
+                </div>
+                
+                <div class="contact-card fade-in">
+                    <div class="contact-icon">📲</div>
+                    <h3>واتساب الدعم الفني</h3>
+                    <p>للدعم الفني والمساعدة التقنية</p>
+                    <div style="margin-top: 15px;">
+                        <strong style="color: var(--primary-green); font-size: 1.2rem;">07756745524</strong>
+                    </div>
+                    <a href="https://api.whatsapp.com/send/?phone=07756745524&text=مرحباً، أحتاج مساعدة تقنية من فريق SelfHealing&type=phone_number&app_absent=0" 
+                       target="_blank" class="btn" style="margin-top: 15px; display: inline-block;">
+                        تواصل عبر واتساب
+                    </a>
+                </div>
+                
+                <div class="contact-card fade-in">
+                    <div class="contact-icon">📧</div>
+                    <h3>البريد الإلكتروني</h3>
+                    <p>للاستفسارات الرسمية والشكاوى</p>
+                    <div style="margin-top: 15px;">
+                        <strong style="color: var(--primary-green); font-size: 1.1rem;">selfhealing.store1@gmail.com</strong>
+                    </div>
+                    <a href="mailto:selfhealing.store1@gmail.com?subject=استفسار من موقع SelfHealing&body=مرحباً، أريد الاستفسار عن..." 
+                       class="btn" style="margin-top: 15px; display: inline-block;">
+                        إرسال إيميل
+                    </a>
+                </div>
+            </section>
+            
+            <!-- نموذج التواصل -->
+            <div class="card">
+                <h2 style="text-align: center; color: var(--dark-green); margin-bottom: 30px;">📝 إرسال رسالة</h2>
+                <form class="contact-form" id="contactForm" onsubmit="sendMessage(event)">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                        <div class="form-group">
+                            <label for="name">الاسم الكامل *</label>
+                            <input type="text" id="name" name="name" required placeholder="أدخل اسمك الكامل">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">البريد الإلكتروني *</label>
+                            <input type="email" id="email" name="email" required placeholder="example@email.com">
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                        <div class="form-group">
+                            <label for="phone">رقم الهاتف</label>
+                            <input type="tel" id="phone" name="phone" placeholder="07xxxxxxxxx">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">موضوع الرسالة *</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">اختر موضوع الرسالة</option>
+                                <option value="استفسار عن منتج">استفسار عن منتج</option>
+                                <option value="طلب جديد">طلب جديد</option>
+                                <option value="شكوى أو اقتراح">شكوى أو اقتراح</option>
+                                <option value="دعم فني">دعم فني</option>
+                                <option value="استفسار عام">استفسار عام</option>
+                                <option value="أخرى">أخرى</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">نص الرسالة *</label>
+                        <textarea id="message" name="message" rows="6" required 
+                                  placeholder="اكتب رسالتك هنا... سنكون سعداء بالرد عليك في أقرب وقت ممكن"></textarea>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn" style="font-size: 1.1rem; padding: 15px 40px;">
+                            📤 إرسال الرسالة عبر واتساب
+                        </button>
+                        <p style="color: var(--text-light); font-size: 0.9rem; margin-top: 10px;">
+                            سيتم إرسال رسالتك مباشرة عبر واتساب لضمان الرد السريع
+                        </p>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- ساعات العمل -->
+            <div class="card">
+                <h2 style="text-align: center; color: var(--dark-green); margin-bottom: 25px;">🕒 ساعات العمل</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center;">
+                    <div>
+                        <h4 style="color: var(--primary-green); margin-bottom: 10px;">أيام الأسبوع</h4>
+                        <p style="color: var(--text-color);">السبت - الخميس</p>
+                        <p style="color: var(--dark-green); font-weight: bold;">9:00 ص - 10:00 م</p>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: var(--primary-green); margin-bottom: 10px;">يوم الجمعة</h4>
+                        <p style="color: var(--text-color);">الجمعة</p>
+                        <p style="color: var(--dark-green); font-weight: bold;">2:00 م - 10:00 م</p>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: var(--primary-green); margin-bottom: 10px;">الدعم الطارئ</h4>
+                        <p style="color: var(--text-color);">واتساب فقط</p>
+                        <p style="color: var(--dark-green); font-weight: bold;">24/7</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- الأسئلة الشائعة -->
+            <div class="card">
+                <h2 style="text-align: center; color: var(--dark-green); margin-bottom: 25px;">❓ الأسئلة الشائعة</h2>
+                <div style="display: grid; gap: 20px;">
+                    <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;">
+                        <h4 style="color: var(--primary-green); margin-bottom: 10px;">كيف يمكنني تقديم طلب؟</h4>
+                        <p style="color: var(--text-color);">يمكنك إضافة المنتجات إلى السلة ثم الضغط على "إكمال الطلب عبر واتساب" لإرسال طلبك مباشرة.</p>
+                    </div>
+                    
+                    <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;">
+                        <h4 style="color: var(--primary-green); margin-bottom: 10px;">ما هي طرق الدفع المتاحة؟</h4>
+                        <p style="color: var(--text-color);">نقبل الدفع عند الاستلام (كاش) فقط لضمان راحتك وأمانك.</p>
+                    </div>
+                    
+                    <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;">
+                        <h4 style="color: var(--primary-green); margin-bottom: 10px;">كم تستغرق مدة التوصيل؟</h4>
+                        <p style="color: var(--text-color);">عادة 2-5 أيام عمل حسب المنطقة. سيتم إعلامك بالموعد المحدد عند تأكيد الطلب.</p>
+                    </div>
+                    
+                    <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;">
+                        <h4 style="color: var(--primary-green); margin-bottom: 10px;">هل المنتجات أصلية؟</h4>
+                        <p style="color: var(--text-color);">نعم، جميع منتجاتنا أصلية 100% ومضمونة الجودة من مصادر موثوقة.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>متجر SelfHealing</h3>
+                    <p>متجرك المتخصص في المنتجات الطبيعية والصحية عالية الجودة.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="products.html">المنتجات</a></li>
+                        <li><a href="cart.html">السلة</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>تواصل معنا</h3>
+                    <p>📱 واتساب: 07513958118</p>
+                    <p>📱 واتساب: 07756745524</p>
+                    <p>📧 البريد الإلكتروني: selfhealing.store1@gmail.com</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>معلومات مهمة</h3>
+                    <p>🚚 توصيل سريع لجميع أنحاء العراق</p>
+                    <p>💰 الدفع عند الاستلام</p>
+                    <p>🔒 منتجات أصلية ومضمونة</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);">
+                <p>&copy; 2024 متجر SelfHealing. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- زر العودة للأعلى -->
+    <button class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
+        ↑
+    </button>
+
+    <!-- JavaScript -->
+    <script src="js/products-data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
+
